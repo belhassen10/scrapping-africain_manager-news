@@ -94,7 +94,7 @@ class ScrapeRssSpider(scrapy.Spider):
             return sentences
         
         for i in range((len(items))):
-            for p in ['title','author','pubDate','description']:              #,'text']:
+            for p in ['title','author','pubDate','description']:              
                 items[i][p]=remove_punctuation_special_chars(items[i][p])
                 items[i][p]=split_sentences(items[i][p])
                 
@@ -116,12 +116,12 @@ class ScrapeRssSpider(scrapy.Spider):
         df = pd.DataFrame(items, columns=['title', 'link','author','pubDate','description','text'])
         
         
-        filename= r'C:\Users\Amdoun\Desktop\Stage\africain_manager\africain_manager\africanmanager.csv'
+        filename= 'africain_manager/africanmanager.csv'
         if os.path.exists(filename):
             print('fichier existe , data ajouté avec succée')
-            df.to_csv('africanmanager.csv', mode='a', index=False)
+            df.to_csv('africain_manager/africanmanager.csv', mode='a', index=False)
         else :
-            df.to_csv('africanmanager.csv', index=False ) 
+            df.to_csv('africain_manager/africanmanager.csv', index=False ) 
             
     
 
