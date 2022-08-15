@@ -1,0 +1,40 @@
+name: Scrape latest data
+
+on:
+  push: 
+
+jobs:
+  report:
+    runs-on: windows-latest
+    strategy:
+      matrix:
+        python-version: [ 3.9 ]
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v2
+      with:
+        python-version: ${{ matrix.python-version }}
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        python -m pip install scrapy 
+        python -m pip install pandas
+        python -m pip install spacy
+        python -m spacy download fr_core_news_sm
+      
+   
+        
+    - name: Fetch latest data
+      run: |-
+         scrapy runspider africain_manager/spiders/africainscrape.py
+    - name: Commit and push if it changed
+      run: |-
+        git config --global user.email "belhassen.amdoun@etudiant-enit.utm.tn"
+        git config --global user.name "belhassen10"
+        git add .
+      
+        git commit -m "Latest data" 
+        git config pull.rebase false
+        git push origin master
