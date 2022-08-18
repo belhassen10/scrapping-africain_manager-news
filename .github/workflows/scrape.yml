@@ -1,7 +1,9 @@
 name: Scrape latest data
 
 on:
-  push: 
+  schedule:
+   
+    - cron: '00 14 * * *' 
 
 jobs:
   report:
